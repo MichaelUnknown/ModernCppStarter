@@ -36,3 +36,6 @@ jobs:
         run: |
           cd build
           ctest --build-config Debug
+
+      - name: run
+        run: ./build/GreeterStandalone
