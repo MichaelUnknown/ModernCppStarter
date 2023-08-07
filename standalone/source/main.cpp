@@ -9,6 +9,9 @@
 int main() {
   crow::SimpleApp app;
 
+  // Example of a request taking URL parameters
+  // If you want to activate all the functions just query
+  // {ip}:3080/hello?language='blabla'
   CROW_ROUTE(app, "/hello")
   ([](const crow::request& req) {
     // check params

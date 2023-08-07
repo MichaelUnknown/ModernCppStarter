@@ -26,6 +26,9 @@ jobs:
           path: "**/cpm_modules"
           key: ${{ github.workflow }}-cpm-modules-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
 
+      - name: install boost
+        run: sudo apt-get install -y libboost-thread-dev
+
       - name: configure
         run: cmake -S standalone -B build -D CMAKE_BUILD_TYPE=Debug
 
