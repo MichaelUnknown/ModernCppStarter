@@ -65,6 +65,10 @@ RUN tar -xzf GreeterStandalone-1.0-Linux.tar.gz --strip-components=1 GreeterStan
 ENV LANG=C.UTF8
 ENV LD_LIBRARY_PATH=/app/lib/Greeter-1.0:/app/lib:$LD_LIBRARY_PATH
 
+EXPOSE 3080/tcp
+HEALTHCHECK --interval=1m --timeout=3s \
+  CMD /app/service_test.sh || exit 1
+
 # Running application as a simple service forever
 CMD ["./GreeterStandalone"]
 

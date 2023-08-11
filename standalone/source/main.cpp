@@ -15,13 +15,13 @@ int main() {
   CROW_ROUTE(app, "/hello")
   ([](const crow::request& req) {
     // check params
-    std::cout << "Params: " << req.url_params << "\n";
-    std::cout << "The key 'language' was "
-              << (req.url_params.get("language") == nullptr ? "not " : "") << "found.\n";
+    std::cerr << "Params: " << req.url_params << "\n";
+    std::cerr << "The key 'language' was "
+             << (req.url_params.get("language") == nullptr ? "not " : "") << "found.\n";
 
     if (req.url_params.get("language") == nullptr) {
       // return bad request
-      return crow::response(400, "please provide a 'language' argument");
+      return crow::response(400, "please provide a 'language={en|de|es|fr}' argument");
     }
     const auto language = req.url_params.get("language");
 
@@ -35,7 +35,8 @@ int main() {
     const auto langIt = languages.find(language);
     if (langIt == languages.end()) {
       // return bad request
-      std::cout << "Greeting for language '" << language << "' is not available\n";
+      std::cerr << "Greeting for language '" << language
+               << "' is not available, use one of: [en, de, es, fr]\n";
       return crow::response(400, "language not recognized");
     }
 
