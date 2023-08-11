@@ -38,6 +38,7 @@ RUN cd standalone && cmake --workflow --preset=default
 FROM ubuntu:latest as webapp-run
 
 # Installing debian runtime packages
+# TBD: snmp snmp-mibs-downloader \
 RUN set -eux; \
     apt-get update; \
     apt-get upgrade -y; \
@@ -49,13 +50,12 @@ RUN set -eux; \
     network-manager \
     python3 \
     pip \
-    # snmp snmp-mibs-downloader \
-    ;
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
 # Installing build tools with pip
-RUN pip install wheel
+RUN pip install wheel pyftpdlib
 
 COPY --from=webapp-build /standalone/service_test.sh .
 COPY --from=webapp-build /build/standalone/GreeterStandalone .
@@ -67,7 +67,7 @@ ENV LD_LIBRARY_PATH=/app/lib/Greeter-1.0:/app/lib:$LD_LIBRARY_PATH
 
 EXPOSE 3080/tcp
 HEALTHCHECK --interval=1m --timeout=3s \
-  CMD /app/service_test.sh || exit 1
+  CMD /app/service_test.sh /bin/echo || exit 1
 
 # Running application as a simple service forever
 CMD ["./GreeterStandalone"]

@@ -17,7 +17,7 @@ int main() {
     // check params
     std::cerr << "Params: " << req.url_params << "\n";
     std::cerr << "The key 'language' was "
-             << (req.url_params.get("language") == nullptr ? "not " : "") << "found.\n";
+              << (req.url_params.get("language") == nullptr ? "not " : "") << "found.\n";
 
     if (req.url_params.get("language") == nullptr) {
       // return bad request
@@ -36,7 +36,7 @@ int main() {
     if (langIt == languages.end()) {
       // return bad request
       std::cerr << "Greeting for language '" << language
-               << "' is not available, use one of: [en, de, es, fr]\n";
+                << "' is not available, use one of: [en, de, es, fr]\n";
       return crow::response(400, "language not recognized");
     }
 
